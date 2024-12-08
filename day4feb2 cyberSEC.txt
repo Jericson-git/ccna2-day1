@@ -229,7 +229,104 @@ Top 5 UTM: 1.FortinetFortigate: syet
            1.1: Palo Alto:superSuplado
            2. Checkpoint
            3.4 Cisco
+#FIREWALL Profile no.1: use ExtendedAcl vs NamedExtendedAcl
+ex1. you are admin for pogo sites.
+www.web310.com #open only http, https, ping
+www.web311.com #open only dns, https. ssh	==> 5 lines; 
+ GOLDEN FW FORMULA: PALO ALTO, FIREWALL,CISCO. CHECKPOINT
+ protocol		HACKER		VICTIM		PORT
+tcp,udp,icmp,IP 	any		web310/311	
 
+conf t
+service timestamps log datetime
+service timestamps debug datetime
+logging 10.32.1.10 
+logging trap 5 
+no IP access-list Extended FWP1
+IP access-list Extended FWP1
+ permit tcp Any host www.web310.com eq 80 log
+ permit tcp Any host www.web310.com eq 443 log
+ permit icmp Any host www.web310.com log
+ permit tcp Any host www.web311.com eq 53 log
+ permit tcp Any host www.web311.com eq 443 log
+ permit tcp Any host www.web311.com eq 22 log
+ int Gi 3
+  ip access-group FWP1 in
+end
+
+conf t
+int Gi 3
+no IP access-list Extended FWP1
+end
+
+TAKAS: ctrl + shift + 6 bitaw press x 
+
+ex2. you are admin for pogo sites.
+www.web310.com #open only ssh, dns, http
+www.web311.com #open only telnet, ssh, https, ping	==> 7 lines; 
+ GOLDEN FW FORMULA: PALO ALTO, FIREWALL,CISCO. CHECKPOINT
+ protocol		HACKER		VICTIM		PORT
+tcp,udp,icmp,IP 	any		web310/311	
+
+
+conf t
+service timestamps log datetime
+service timestamps debug datetime
+logging 10.32.1.10 
+logging trap 5 
+no IP access-list Extended FWP2
+IP access-list Extended FWP2
+ permit tcp Any host www.web310.com eq 22 log
+ permit tcp Any host www.web310.com eq 53 log
+ permit tcp Any host www.web310.com eq 80 log
+ permit icmp Any host www.web311.com log
+ permit tcp Any host www.web311.com eq 22 log
+ permit tcp Any host www.web311.com eq 23 log
+ permit tcp Any host www.web311.com eq 443 log
+ int Gi 3
+  ip access-group FWP2 in
+end
+
+
+ex3. you are admin for pogo sites.
+www.web310.com #open only 443
+www.web311.com #open only ping	==> 2 lines; 
+ GOLDEN FW FORMULA: PALO ALTO, FIREWALL,CISCO. CHECKPOINT
+ protocol		HACKER		VICTIM		PORT
+tcp,udp,icmp,IP 	any		web310/311	
+
+conf t
+service timestamps log datetime
+service timestamps debug datetime
+logging 10.32.1.10 
+logging trap 5 
+no IP access-list Extended FWP2
+no IP access-list Extended Praning3
+IP access-list Extended Praning3
+ permit tcp Any host www.web310.com eq 443 log
+ permit icmp Any host www.web311.com 
+end
+
+
+ex3. you are admin for pogo sites.
+www.web310.com #open only ping, dns
+www.web311.com #open only ping, ssh	==> 4 lines; 
+ GOLDEN FW FORMULA: PALO ALTO, FIREWALL,CISCO. CHECKPOINT
+ protocol		HACKER		VICTIM		PORT
+tcp,udp,icmp,IP 	any		web310/311
+
+conf t
+service timestamps log datetime
+service timestamps debug datetime
+logging 10.32.1.10 
+logging trap 5 
+no IP access-list Extended Praning4
+IP access-list Extended Praning4
+ permit tcp Any host www.web310.com eq 53 log
+ permit icmp Any host www.web310.com 
+ permit tcp Any host www.web311.com eq 22 log
+ permit icmp Any host www.web311.com 
+end
 CYBERSECURITY TASK7: PROTECTING YOUR CORPORATE WEB APPS.
 EX.1 CREATE A FIREWALL POLICY NAMED Policy1 TO OPEN
 WWW.WEB8.COM HAS HTTP AND HTTPS AS OPEN
@@ -362,18 +459,18 @@ STEP2: create Access-list to permit IP of Inside:
 STEP3: create a NAT pool with overload
 @vpnPH:
 config t
-int gi 2
-ip nat OUTSIDE
 int gi 1
+ip nat OUTSIDE
+int gi 2
 ip nat INSIDE
 int gi 3
 ip nat INSIDE
-no access-list 7
-access-list 7 permit 192.168.101.0 0.0.0.255
-access-list 7 permit 192.168.103.0 0.0.0.255
-ip nat inside source list 7 interface Gi 2 overload
-ip nat inside source static 192.168.103.11 192.168.108.69
-ip nat inside source static 192.168.103.12 192.168.108.88
+no access-list 9
+access-list 9 permit 192.168.102.0 0.0.0.255
+access-list 9 permit 192.168.103.0 0.0.0.255
+ip nat inside source list 9 interface Gi 1 overload
+ip nat inside source static 192.168.102.100 208.8.8.69
+ip nat inside source static 192.168.103.100 208.8.8.88
 end
 FW-VPN-PH#show ip nat translations 
 Pro  Inside global         Inside local          Outside local         Outside global
