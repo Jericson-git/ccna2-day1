@@ -212,6 +212,10 @@ config t
 	 ip add 10._.100.4 255.255.255.0
 	 description VOICEVLAN
 
+
+
+
+
 TASK3: THE ULTIMATE SKILL FOR A NETWORK ENGINEER.
 Top 5 brands: PANG MAYAMAN
 1.Cisco = 75% =google,aws,azure,etc,
@@ -227,7 +231,8 @@ sh spanning-tree vlan 1
 TASK3: EXPENSIVE SWITCH/MANAGEABLE SWITCH:\ = 20k
 1. mac address learning": sh mac address-table
 2  mac address filtering
-3  mac address forwaring
+3  mac address forwarding , switch FullDuplex = 2x speed = 1gbps --> 2gbps
+				wifi7: 46 Gbps vs switch:10 Gbps ; switch wins!
 4  Php: loop avoidance
 5. $$: Vlan Feature $$ = 60k up
 
@@ -281,6 +286,7 @@ WonderWoman: 802.1w: rapidSTP
 SuperMan: 802.1s: MiSTP
 "Protect Many Switches at the same time!"
 
+
 TASK8: ACCESS PORTS VS TRUNK PORTS: lab mo sa exam.
 Trunk Ports: switch to switch:
 TAAS/BABA:
@@ -299,6 +305,8 @@ TASK9: SPANNING-TREE PROTOCOL: 802.1D: protect switches Slowly.
 blk-lis-lrn-fwd = 30 seconds.
 wireshark = bridge priority is 32768 = very Hackable!
 " bobo/inutil ang Network Engineer nyo sa company!"
+ if 24576 = highIQ,magaling, 32568 = bobo.inutil
+ if 28672 = bangag,adik
 Protect the Most Important SWitch in your 
 Office: RootBridge = TAAS, 2ndRootBridge = BABA:
 TAAS:/d1       32786 --> 24576
@@ -358,7 +366,7 @@ end
 #sh int status err-disabled 
 TAAS: bounce/UP/down, bring BACK TO LIFE.
 config t
-int fa 0/1
+int fa 0/7
  shut
  no shut
 int fa 0/3
